@@ -3,9 +3,9 @@ package com.example.studentworkslibrary.controllers;
 import com.example.studentworkslibrary.POJO.FullPath;
 import com.example.studentworkslibrary.POJO.RepositoryInfo;
 import com.example.studentworkslibrary.services.CreateFullPathService;
+import com.example.studentworkslibrary.services.JGit.JGitContent;
 import com.example.studentworkslibrary.services.RepositoryInfoFacadeService;
 import com.example.studentworkslibrary.util.PathHelper;
-import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +34,7 @@ public class GitFilesController {
         if (commit != null) {
             repositoryInfoFacadeService.processCommitRequest(username, fullPath, userAndRepositoryInfo, commit);
         }
+
 
         return null;
     }

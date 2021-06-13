@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.eclipse.jgit.revwalk.RevCommit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 public class Node {
     private String name;
-    private int commitTime;
+    private RevCommit revCommit;
     private List<Node> childNodes = new ArrayList<>();
 }

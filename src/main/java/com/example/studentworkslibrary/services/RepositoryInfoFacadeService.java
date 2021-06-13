@@ -21,6 +21,11 @@ public class RepositoryInfoFacadeService {
             repositoryInfo.setRepositoryName(fullPath.getRepository());
             repositoryInfo.setNode(nodeCreateService.createNodeHierarchy(fullPath));
             userAndRepositoryInfo.put(username, repositoryInfo);
+        } else {
+            if (repositoryInfoFound.getAuthor().equals(fullPath.getAuthor()) && repositoryInfoFound.getRepositoryName().equals(fullPath.getRepository())) {
+
+            }
+
         }
 
     }
