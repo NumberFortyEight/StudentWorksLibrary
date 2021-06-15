@@ -4,6 +4,7 @@ import com.example.studentworkslibrary.POJO.FullPath;
 import com.example.studentworkslibrary.POJO.RepositoryInfo;
 import com.example.studentworkslibrary.services.CreateFullPathService;
 import com.example.studentworkslibrary.services.JGit.JGitContent;
+import com.example.studentworkslibrary.services.JGit.JGitService;
 import com.example.studentworkslibrary.services.RepositoryInfoFacadeService;
 import com.example.studentworkslibrary.util.PathHelper;
 import lombok.NonNull;
@@ -24,7 +25,11 @@ import java.util.Map;
 public class GitFilesController {
     @NonNull
     private final CreateFullPathService createFullPathService;
+    @NonNull
     private final RepositoryInfoFacadeService repositoryInfoFacadeService;
+    @NonNull
+    private final JGitService jGitService;
+
     private final Map<String, RepositoryInfo> userAndRepositoryInfo = new HashMap<>();
 
     @GetMapping("/**")
@@ -34,6 +39,7 @@ public class GitFilesController {
         if (commit != null) {
             repositoryInfoFacadeService.processCommitRequest(username, fullPath, userAndRepositoryInfo, commit);
         }
+
 
 
         return null;

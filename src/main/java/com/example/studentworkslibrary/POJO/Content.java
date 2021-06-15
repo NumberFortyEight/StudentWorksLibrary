@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class Content<T> {
+public class Content {
     private final String name;
-    private final T content;
+    private final Object content;
 }

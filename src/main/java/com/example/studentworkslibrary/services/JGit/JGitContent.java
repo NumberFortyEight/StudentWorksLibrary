@@ -28,7 +28,7 @@ public class JGitContent {
         this.currentCommit = revCommit;
         this.treeWalk = new TreeWalk(repository);
         this.workPath = fullPath.getWorkPath();
-        this.pathToRepository = ("/".concat(fullPath.getAuthor())).concat(fullPath.getRepository());
+        this.pathToRepository = "/" + fullPath.getAuthor() + "/" + fullPath.getRepository();
     }
 
     private boolean isThisExist() throws IOException {
@@ -73,31 +73,31 @@ public class JGitContent {
         throw new IllegalStateException("unknown state");
     }
 
-    public Content<?> getObject() throws Exception {
+    public Content getObject() throws Exception {
         if (isThisExist()) {
             if (isFile()) {
                 return loadFile();
             } else {
-                return new Content<>(".json", getDirs());
+                return getDirs();
             }
         }
         throw new IllegalStateException("emptyContent");
     }
 
     @SuppressWarnings("LoopStatementThatDoesntLoop")
-    private Content<byte[]> loadFile() throws IOException {
+    private Content loadFile() throws IOException {
         treeWalk.addTree(currentCommit.getTree());
         treeWalk.setRecursive(true);
         treeWalk.setFilter(PathFilter.create(workPath));
         try (ObjectReader objectReader = repository.newObjectReader()) {
             while (treeWalk.next()) {
-                return new Content<>(treeWalk.getNameString(), objectReader.open(treeWalk.getObjectId(0)).getBytes());
+                return new Content(treeWalk.getNameString(), objectReader.open(treeWalk.getObjectId(0)).getBytes());
             }
         }
         return null;
     }
 
-    private List<FileModel> getDirs() throws IOException {
+    private Content getDirs() throws IOException {
         treeWalk.addTree(currentCommit.getTree());
         treeWalk.setRecursive(false);
 
@@ -136,7 +136,7 @@ public class JGitContent {
                 }
             }
         }
-        return toLoad;
+        return new Content(".json", toLoad);
     }
 
 

@@ -14,7 +14,7 @@ public class CreateFullPathServiceTest {
     @Test
     public void testFullPath(){
         FullPath fullPath = createFullPathService.createFullPath("api/dima/.git/sds/sdsd/asdasd/asdasd/asdasdsa");
-        Assertions.assertEquals(fullPath.getAuthor(), "dima");
+        Assertions.assertEquals(fullPath.getAuthor(), "/dima");
         Assertions.assertEquals(fullPath.getRepository(), ".git");
     }
 }

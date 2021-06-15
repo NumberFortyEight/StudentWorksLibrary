@@ -9,7 +9,8 @@ public class CreateFullPathService {
 
     public FullPath createFullPath(String fullPath){
         FullPath fullPathObject = new FullPath();
-        fullPathObject.setAuthor(PathHelper.getRelativePath(PathHelper.skipAndLimit(fullPath, 1, 1)));
+        fullPathObject.setPathToRepository(PathHelper.getAbsolutePath(PathHelper.skipAndLimit(fullPath, 1, 2)));
+        fullPathObject.setAuthor(PathHelper.getAbsolutePath(PathHelper.skipAndLimit(fullPath, 1, 1)));
         fullPathObject.setRepository(PathHelper.getRelativePath(PathHelper.skipAndLimit(fullPath, 2, 1)));
         fullPathObject.setWorkPath(PathHelper.getRelativePath(PathHelper.skip(fullPath, 3)));
         return fullPathObject;

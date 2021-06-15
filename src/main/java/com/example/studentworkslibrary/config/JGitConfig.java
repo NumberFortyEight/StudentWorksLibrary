@@ -11,10 +11,5 @@ import org.springframework.context.annotation.Scope;
 @Configuration
 public class JGitConfig {
 
-    @Bean
-    @Scope("prototype")
-    public JGitContent jGitContent(FullPath fullPath, Git git, RevCommit revCommit){
-        return new JGitContent(fullPath, git, revCommit);
-    }
 
 }

@@ -11,6 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class FullPath {
     /** only absolute path */
+    private String pathToRepository;
+    /** only absolute path */
     private String author;
     /** only relative path */
     private String repository;
