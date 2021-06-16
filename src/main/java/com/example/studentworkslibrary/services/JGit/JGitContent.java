@@ -28,7 +28,7 @@ public class JGitContent {
         this.currentCommit = revCommit;
         this.treeWalk = new TreeWalk(repository);
         this.workPath = fullPath.getWorkPath();
-        this.pathToRepository = "/" + fullPath.getAuthor() + "/" + fullPath.getRepository();
+        this.pathToRepository = fullPath.getAuthor() + "/" + fullPath.getRepository();
     }
 
     private boolean isThisExist() throws IOException {

@@ -5,6 +5,8 @@ import com.example.studentworkslibrary.POJO.FullPath;
 import com.example.studentworkslibrary.POJO.RepositoryInfo;
 import com.example.studentworkslibrary.services.RepositoryInfoFacadeService;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,12 +17,10 @@ import java.io.IOException;
 import java.util.Map;
 
 @Service
-@AllArgsConstructor
 public class JGitService {
 
     @Value("${path.to.repositories}")
-    private final String REPOSITORIES_PATH;
-    private final RepositoryInfoFacadeService repositoryInfoFacadeService;
+    private String REPOSITORIES_PATH;
 
     private Git getGit(FullPath fullPath) {
         try {
@@ -30,9 +30,8 @@ public class JGitService {
         }
     }
 
-    public Content getContent(String username, Map<String, RepositoryInfo> userAndRepositoryInfo, FullPath fullPath){
+    public Content getContent(FullPath fullPath, RevCommit commit){
         try {
-            RevCommit commit = repositoryInfoFacadeService.findCommit(username, userAndRepositoryInfo, fullPath);
             return new JGitContent(fullPath, getGit(fullPath), commit).getObject();
         } catch (Exception e) {
             throw new IllegalStateException();
