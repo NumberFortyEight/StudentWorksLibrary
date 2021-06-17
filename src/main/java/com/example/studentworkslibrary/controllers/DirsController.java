@@ -29,6 +29,6 @@ public class DirsController {
 
     @RequestMapping("/")
     void handleFoo(HttpServletResponse response) throws IOException {
-        response.sendRedirect("/api");
+        response.sendRedirect("/build/index.html");
     }
 }

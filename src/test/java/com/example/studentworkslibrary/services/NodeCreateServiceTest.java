@@ -8,7 +8,6 @@ import org.springframework.util.Assert;
 
 public class NodeCreateServiceTest {
 
-    private final NodeCreateService nodeCreateService = new NodeCreateService();
 
     @Test
     public void createNodeHierarchy() {
@@ -16,8 +15,5 @@ public class NodeCreateServiceTest {
         fullPath.setWorkPath("11/cxx/man");
         fullPath.setAuthor("miro");
         fullPath.setRepository("fgd.git");
-
-        Node node = nodeCreateService.createNodeHierarchy(fullPath, null);
-        Assert.isTrue(node.getName().equals("11"));
     }
 }

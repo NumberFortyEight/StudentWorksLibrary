@@ -1,4 +1,4 @@
-package com.example.studentworkslibrary.services;
+package com.example.studentworkslibrary.services.node;
 
 import com.example.studentworkslibrary.POJO.FullPath;
 import com.example.studentworkslibrary.POJO.Node;

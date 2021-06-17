@@ -2,15 +2,15 @@ package com.example.studentworkslibrary.services;
 
 import com.example.studentworkslibrary.POJO.FullPath;
 import com.example.studentworkslibrary.POJO.RepositoryInfo;
-import com.example.studentworkslibrary.services.JGit.GitInfo;
 import com.example.studentworkslibrary.services.JGit.JGitService;
+import com.example.studentworkslibrary.services.node.NodeCreateService;
+import com.example.studentworkslibrary.services.node.NodeUpdateService;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -24,7 +24,7 @@ public class RepositoryInfoFacadeService {
     @SneakyThrows
     public void processCommitRequest(String username, FullPath fullPath, Map<String, RepositoryInfo> userAndRepositoryInfo, Integer commitUnixTime) {
         RepositoryInfo repositoryInfoFound = userAndRepositoryInfo.get(username);
-        RevCommit commitByTime = jGitService.getGitInfo(fullPath).getCommitByTime(commitUnixTime);
+        RevCommit commitByTime = jGitService.getGitInfo(fullPath).getRevCommitByTime(commitUnixTime);
         if (repositoryInfoFound == null) {
             RepositoryInfo repositoryInfo = new RepositoryInfo();
             repositoryInfo.setAuthor(fullPath.getAuthor());
@@ -50,6 +50,6 @@ public class RepositoryInfoFacadeService {
                 return nodeFindService.findCommit(repositoryInfo.getNode(), fullPath.getWorkPath());
             }
         }
-        return jGitService.getGitInfo(fullPath).getLastCommit();
+        return jGitService.getGitInfo(fullPath).getLastRevCommit();
     }
 }

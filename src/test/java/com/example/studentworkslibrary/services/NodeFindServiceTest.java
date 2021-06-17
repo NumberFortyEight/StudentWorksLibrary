@@ -10,16 +10,6 @@ import java.io.IOException;
 
 public class NodeFindServiceTest {
 
-    NodeFindService nodeFindService = new NodeFindService();
-    NodeCreateService nodeCreateService = new NodeCreateService();
-    GitInfo gitInfo;
-    {
-        try {
-            gitInfo = new GitInfo(Git.open(new File("C:\\repositories\\TESTED\\.git")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Test
     public void findCommit() {

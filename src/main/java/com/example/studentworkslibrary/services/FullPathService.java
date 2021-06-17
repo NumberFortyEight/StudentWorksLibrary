@@ -5,7 +5,7 @@ import com.example.studentworkslibrary.util.PathHelper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CreateFullPathService {
+public class FullPathService {
 
     public FullPath createFullPath(String fullPath){
         FullPath fullPathObject = new FullPath();

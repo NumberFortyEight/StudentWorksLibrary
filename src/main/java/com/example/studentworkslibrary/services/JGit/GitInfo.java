@@ -23,21 +23,21 @@ public class GitInfo {
         this.git = git;
     }
 
-    public RevCommit getCommitByTime(int unixTime) throws GitAPIException {
+    public RevCommit getRevCommitByTime(int unixTime) throws GitAPIException {
         return StreamSupport.stream(
                 Spliterators.spliteratorUnknownSize(git.log()
                         .call()
                         .iterator(), Spliterator.ORDERED), false)
                 .filter(revCommit -> revCommit.getCommitTime() == unixTime)
                 .findFirst()
-                .orElse(getLastCommit());
+                .orElse(getLastRevCommit());
     }
 
-    public RevCommit getLastCommit() throws GitAPIException {
+    public RevCommit getLastRevCommit() throws GitAPIException {
         return git.log().call().iterator().next();
     }
 
-    public List<RevCommit> getAllCommits() throws GitAPIException {
+    public List<RevCommit> getAllRevCommits() throws GitAPIException {
         List<RevCommit> revCommitList = new ArrayList<>();
         for (RevCommit revCommit : git.log().call()) {
             revCommitList.add(revCommit);
@@ -45,16 +45,16 @@ public class GitInfo {
         return revCommitList;
     }
 
-    public List<RevCommit> getCommitsByFullPath(FullPath fullPath) throws Exception {
+    public List<RevCommit> getRevCommitsByFullPath(FullPath fullPath) throws Exception {
         String workPath = fullPath.getWorkPath();
         if (workPath.equals("") || workPath.equals("/")) {
-            return getAllCommits();
+            return getAllRevCommits();
         } else {
-            return getCommitsByPath(workPath);
+            return getRevCommitsByPath(workPath);
         }
     }
 
-    private ArrayList<RevCommit> getCommitsByPath(String path) throws Exception {
+    private ArrayList<RevCommit> getRevCommitsByPath(String path) throws Exception {
         ArrayList<RevCommit> commits = new ArrayList<>();
         RevCommit start = null;
         do {
