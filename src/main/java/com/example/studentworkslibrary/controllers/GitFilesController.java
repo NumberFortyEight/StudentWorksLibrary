@@ -31,7 +31,7 @@ public class  GitFilesController {
 
     private final Map<String, RepositoryInfo> userAndRepositoryInfo = new HashMap<>();
 
-    @GetMapping("{}/{}/**")
+    @GetMapping("{student}/{repository}/**")
     public Object gitApi(HttpServletRequest request, @RequestParam(required = false) Integer commit){
         String username = "username";
         FullPath fullPath = fullPathService.createFullPath(PathHelper.getEncodeString(request.getRequestURI()));

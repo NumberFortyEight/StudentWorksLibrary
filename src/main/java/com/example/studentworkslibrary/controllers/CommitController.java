@@ -7,30 +7,28 @@ import com.example.studentworkslibrary.services.FullPathService;
 import com.example.studentworkslibrary.util.PathHelper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Controller
-@RequestMapping("/commit/")
+@RestController
 @AllArgsConstructor
+@RequestMapping("/commit/")
 public class CommitController {
 
     private final FullPathService fullPathService;
     private final CommitService commitService;
 
-    @GetMapping("{}/{}/allcommits")
-    List<Commit> getAllCommits(HttpServletRequest request){
+    @GetMapping("{student}/{repository}/allcommits")
+    public List<Commit> getAllCommits(HttpServletRequest request, @PathVariable String student, @PathVariable String repository){
         FullPath fullPath = fullPathService.createFullPath(PathHelper.getEncodeString(request.getRequestURI()));
         return commitService.getAllCommits(fullPath);
     }
 
-    @GetMapping("{}/{}/**")
-    public List<Commit> getCommitsByPath(@RequestParam(required = false) Integer unixTime, HttpServletRequest request){
+    @GetMapping("{student}/{repository}/**")
+    public List<Commit> getCommitsByPath(@RequestParam(required = false) Integer unixTime, HttpServletRequest request, @PathVariable String repository, @PathVariable String student){
         FullPath fullPath = fullPathService.createFullPath(PathHelper.getEncodeString(request.getRequestURI()));
         List<Commit> commitsByPath = commitService.getCommitsByPath(fullPath);
         if (unixTime == null){
@@ -42,3 +40,4 @@ public class CommitController {
         }
     }
 }
+

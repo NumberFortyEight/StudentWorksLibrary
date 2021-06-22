@@ -17,5 +17,7 @@ public class FullPath {
     /** only relative path */
     private String repository;
     /** only relative path */
+    private String workPathWithRepository;
+    /** only relative path */
     private String workPath;
 }

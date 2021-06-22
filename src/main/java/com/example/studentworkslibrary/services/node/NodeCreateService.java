@@ -13,10 +13,14 @@ public class NodeCreateService {
         Node repositoryNode = new Node();
         repositoryNode.setName(fullPath.getRepository());
         repositoryNode.setRevCommit(revCommit);
-        return createNodeBranch(repositoryNode, fullPath.getWorkPath(), revCommit);
+        createNodeBranch(repositoryNode, fullPath.getWorkPath(), revCommit);
+        return repositoryNode;
     }
 
-    private Node createNodeBranch(Node lastNode, String workPath, RevCommit revCommit) {
+    public void createNodeBranch(Node lastNode, String workPath, RevCommit revCommit) {
+        if (workPath.equals("")) {
+            return;
+        }
         String[] pathNuggets = workPath.split("/");
         Node node = new Node();
         node.setName(pathNuggets[0]);
@@ -25,6 +29,5 @@ public class NodeCreateService {
         if (pathNuggets.length > 1) {
             createNodeBranch(node, PathHelper.skip(workPath, 1), revCommit);
         }
-        return node;
     }
 }

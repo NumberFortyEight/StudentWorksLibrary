@@ -1,4 +1,4 @@
-package com.example.studentworkslibrary.services;
+package com.example.studentworkslibrary.services.node;
 
 import com.example.studentworkslibrary.POJO.Node;
 import com.example.studentworkslibrary.util.PathHelper;
@@ -25,7 +25,7 @@ public class NodeFindService {
         return node.getRevCommit();
     }
 
-    private Optional<Node> findChildNode(Node node, String childNodeName){
+    public Optional<Node> findChildNode(Node node, String childNodeName){
         return node.getChildNodes()
                 .stream()
                 .filter(childNodes -> childNodes.getName().equals(childNodeName))
