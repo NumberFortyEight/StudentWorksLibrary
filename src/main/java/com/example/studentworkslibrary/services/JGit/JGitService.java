@@ -1,12 +1,7 @@
 package com.example.studentworkslibrary.services.JGit;
 
-import com.example.studentworkslibrary.POJO.Content;
+import com.example.studentworkslibrary.POJO.ObjectWithName;
 import com.example.studentworkslibrary.POJO.FullPath;
-import com.example.studentworkslibrary.POJO.RepositoryInfo;
-import com.example.studentworkslibrary.services.RepositoryInfoFacadeService;
-import lombok.AllArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 
 @Service
 public class JGitService {
@@ -30,9 +24,9 @@ public class JGitService {
         }
     }
 
-    public Content getContent(FullPath fullPath, RevCommit commit){
+    public ObjectWithName getObject(FullPath fullPath, RevCommit commit){
         try {
-            return new JGitContent(fullPath, getGit(fullPath), commit).getObject();
+            return new JGitObject(fullPath, getGit(fullPath), commit).getObject();
         } catch (Exception e) {
             throw new IllegalStateException();
         }

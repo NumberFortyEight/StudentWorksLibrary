@@ -1,6 +1,6 @@
 package com.example.studentworkslibrary.services.JGit;
 
-import com.example.studentworkslibrary.POJO.Content;
+import com.example.studentworkslibrary.POJO.ObjectWithName;
 import com.example.studentworkslibrary.POJO.FileFactory;
 import com.example.studentworkslibrary.POJO.FileModel;
 import com.example.studentworkslibrary.POJO.FullPath;
@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JGitContent {
+public class JGitObject {
 
     private final Repository repository;
     private final RevCommit currentCommit;
@@ -23,7 +23,7 @@ public class JGitContent {
     private final String workPath;
     private final String pathToRepository;
 
-    public JGitContent(FullPath fullPath, Git git, RevCommit revCommit) {
+    public JGitObject(FullPath fullPath, Git git, RevCommit revCommit) {
         this.repository = git.getRepository();
         this.currentCommit = revCommit;
         this.treeWalk = new TreeWalk(repository);
@@ -73,31 +73,36 @@ public class JGitContent {
         throw new IllegalStateException("unknown state");
     }
 
-    public Content getObject() throws Exception {
-        if (isThisExist()) {
-            if (isFile()) {
-                return loadFile();
-            } else {
-                return getDirs();
+    public ObjectWithName getObject() throws Exception {
+        try {
+            if (isThisExist()) {
+                if (isFile()) {
+                    return loadFile();
+                } else {
+                    return getDirs();
+                }
             }
+        } finally {
+            treeWalk.reset();
+            repository.close();
         }
         throw new IllegalStateException("emptyContent");
     }
 
     @SuppressWarnings("LoopStatementThatDoesntLoop")
-    private Content loadFile() throws IOException {
+    private ObjectWithName loadFile() throws IOException {
         treeWalk.addTree(currentCommit.getTree());
         treeWalk.setRecursive(true);
         treeWalk.setFilter(PathFilter.create(workPath));
         try (ObjectReader objectReader = repository.newObjectReader()) {
             while (treeWalk.next()) {
-                return new Content(treeWalk.getNameString(), objectReader.open(treeWalk.getObjectId(0)).getBytes());
+                return new ObjectWithName(treeWalk.getNameString(), objectReader.open(treeWalk.getObjectId(0)).getBytes());
             }
         }
         return null;
     }
 
-    private Content getDirs() throws IOException {
+    private ObjectWithName getDirs() throws IOException {
         treeWalk.addTree(currentCommit.getTree());
         treeWalk.setRecursive(false);
 
@@ -136,7 +141,7 @@ public class JGitContent {
                 }
             }
         }
-        return new Content(".json", toLoad);
+        return new ObjectWithName(".json", toLoad);
     }
 
 
